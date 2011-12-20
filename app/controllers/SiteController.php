@@ -71,7 +71,32 @@ class SiteController extends Controller
 	 */
 	public function actionLogin()
 	{
+		if (!Yii::app()->user->isGuest) {
+			$this->redirect(array('commentDemo/index'));
+		}
+
+    	$user=new User('register');
 		$model=new LoginForm;
+
+    	if(isset($_POST['ajax']) && $_POST['ajax']==='user-register-form')
+	    {
+	        echo CActiveForm::validate($user);
+	        Yii::app()->end();
+	    }
+		
+	    if(isset($_POST['User']))
+	    {
+	        $user->attributes=$_POST['User'];
+	        if($user->save())
+	        {
+				Yii::app()->user->setFlash('success', 'Registration successfull.');
+				$model->username = $user->email;
+				if($model->login()) {
+					$this->redirect(Yii::app()->user->returnUrl);
+				}
+	        }
+	    }
+
 
 		// if it is ajax validation request
 		if(isset($_POST['ajax']) && $_POST['ajax']==='login-form')
@@ -89,7 +114,10 @@ class SiteController extends Controller
 				$this->redirect(Yii::app()->user->returnUrl);
 		}
 		// display the login form
-		$this->render('login',array('model'=>$model));
+		$this->render('login',array(
+			'model'=>$model,
+			'user'=>$user,
+		));
 	}
 
 	/**
