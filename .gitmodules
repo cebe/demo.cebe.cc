@@ -1,3 +1,6 @@
 [submodule "yii"]
 	path = yii
 	url = https://github.com/yiiext/yii
+[submodule "app/extensions/yiiext/modules/comment"]
+	path = app/extensions/yiiext/modules/comment
+	url = https://github.com/yiiext/comment-module.git
