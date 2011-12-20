@@ -25,9 +25,29 @@ return array(
 			'class'=>'system.gii.GiiModule',
 			'password'=>'Enter Your Password Here',
 		 	// If removed, Gii defaults to localhost only. Edit carefully to taste.
-			'ipFilters'=>array('127.0.0.1','::1'),
+			'ipFilters'=>array('*', '127.0.0.1','::1'),
 		),
-		*/
+		// */
+	        'comment'=>array(
+	            'class'=>'ext.yiiext.modules.comment.CommentModule',
+	            'commentableModels'=>array(
+	                // define commentable Models here (key is an alias that must be lower case, value is the model class name)
+	                'post'=>'Post'
+	            ),
+	            // set this to the class name of the model that represents your users
+	            'userModelClass'=>'User',
+	            // set this to the username attribute of User model class
+	            'userNameAttribute'=>'name',
+	            // set this to the email attribute of User model class
+	            'userEmailAttribute'=>'email',
+	            // you can set controller filters that will be added to the comment controller {@see CController::filters()}
+	//          'controllerFilters'=>array(),
+	            // you can set accessRules that will be added to the comment controller {@see CController::accessRules()}
+	//          'controllerAccessRules'=>array(),
+	            // you can extend comment class and use your extended one, set path alias here
+	//          'commentModelClass'=>'comment.models.Comment',
+        	),
+
 	),
 
 	// application components
@@ -37,16 +57,16 @@ return array(
 			'allowAutoLogin'=>true,
 		),
 		// uncomment the following to enable URLs in path-format
-		/*
 		'urlManager'=>array(
 			'urlFormat'=>'path',
+			'showScriptName'=>false,
 			'rules'=>array(
+				'comment-module'=>'commentDemo/index',
 				'<controller:\w+>/<id:\d+>'=>'<controller>/view',
 				'<controller:\w+>/<action:\w+>/<id:\d+>'=>'<controller>/<action>',
 				'<controller:\w+>/<action:\w+>'=>'<controller>/<action>',
 			),
 		),
-		*/
 		'db'=>array(
 			'connectionString' => 'sqlite:'.dirname(__FILE__).'/../data/testdrive.db',
 		),
